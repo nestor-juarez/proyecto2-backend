@@ -16,7 +16,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="be-distelsa-tracking" />
-          <factory-entry name="entityManagerFactory" />
+          <factory-entry name="entityManagerFactory" value="74ddc52a-4ba1-4cb9-91c3-89318b41b102" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
@@ -125,5 +125,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.3.7" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.3.7" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-crypto:5.5.0" level="project" />
+    <orderEntry type="library" name="Maven: org.mindrot:jbcrypt:0.3m" level="project" />
   </component>
 </module>

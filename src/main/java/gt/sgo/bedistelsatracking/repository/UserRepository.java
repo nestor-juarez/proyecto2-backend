@@ -1,9 +1,9 @@
 package gt.sgo.bedistelsatracking.repository;
 
-import gt.sgo.bedistelsatracking.model.User;
+import gt.sgo.bedistelsatracking.model.Usuario;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<Usuario, Integer> {
 
-    User findUserByEmailAndPassword(String user, String password);
+    Usuario findUsuarioByEmail(String mail);
 }
