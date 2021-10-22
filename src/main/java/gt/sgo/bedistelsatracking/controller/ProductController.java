@@ -1,6 +1,7 @@
 package gt.sgo.bedistelsatracking.controller;
 
 import gt.sgo.bedistelsatracking.model.Product;
+import gt.sgo.bedistelsatracking.model.ResponseModel;
 import gt.sgo.bedistelsatracking.repository.ProductRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,8 @@ public class ProductController {
     @GetMapping("/all")
     public ResponseEntity<?> getAllProducts(){
         Iterable<Product> dataList = productRespository.findAll();
-        return new ResponseEntity<>(dataList, HttpStatus.OK);
+        ResponseModel rm = new ResponseModel(dataList);
+        return new ResponseEntity<>(rm, HttpStatus.OK);
     }
 
     @PostMapping("/create")
