@@ -2,8 +2,9 @@ package gt.sgo.bedistelsatracking.controller;
 
 import gt.sgo.bedistelsatracking.model.LoginRequest;
 import gt.sgo.bedistelsatracking.model.LoginResponse;
-import gt.sgo.bedistelsatracking.model.User;
+import gt.sgo.bedistelsatracking.model.Usuario;
 import gt.sgo.bedistelsatracking.repository.UserRepository;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,8 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> doLogin(@RequestBody LoginRequest loginRequest) {
 
-        User locatedUser = userRepository.findUserByEmailAndPassword(loginRequest.getUser(), loginRequest.getPasskey());
-
-        if (locatedUser != null) {
+        Usuario locatedUser = userRepository.findUsuarioByEmail(loginRequest.getUser());
+        if (BCrypt.checkpw(loginRequest.getPasskey(), locatedUser.getContrasenia())) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", JWTController.getJWTToken(loginRequest.getUser()));
 
@@ -34,8 +34,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody User user) {
-        userRepository.save(user);
+    public ResponseEntity<?> signUp(@RequestBody Usuario usuario) {
+
+        Usuario locatedUser = userRepository.findUsuarioByEmail(usuario.getEmail());
+        if (locatedUser != null)
+            return new ResponseEntity<>("El correo solicitado ya se encuentra registrado", HttpStatus.BAD_REQUEST);
+
+        usuario.setContrasenia(BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt()));
+        userRepository.save(usuario);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

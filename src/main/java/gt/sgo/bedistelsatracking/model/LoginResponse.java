@@ -7,18 +7,25 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class LoginResponse {
     @JsonProperty("name")
     String name;
+    @JsonProperty("lastname")
+    String lastname;
     @JsonProperty("email")
     String email;
-    @JsonProperty("age")
-    int age;
+    @JsonProperty("id")
+    long id;
+    @JsonProperty("employeId")
+    int codigoEmpleado;
 
-    public LoginResponse(String name, String email, int age) {
+    public LoginResponse(long id, String name, String lastname, String email, int codigoEmpleado) {
+        this.id = id;
         this.name = name;
+        this.lastname = lastname;
         this.email = email;
-        this.age = age;
+        this.codigoEmpleado = codigoEmpleado;
     }
 
-    public static LoginResponse userToLoginResponse(User user) {
-        return new LoginResponse(user.name, user.email, user.age);
+    public static LoginResponse userToLoginResponse(Usuario usuario) {
+        LoginResponse x = new LoginResponse(usuario.id_usuario, usuario.nombre, usuario.apellido, usuario.email, usuario.codigo_empleado);
+        return x;
     }
 }
